@@ -14,7 +14,6 @@ const feedbackFormData = {
 function setItem() {
   feedbackFormData['Email'] = feedbackForm.elements.email.value;
   feedbackFormData['Message'] = feedbackForm.elements.message.value;
-  console.log(feedbackFormData);
   localStorage.setItem('feedback-form-state', JSON.stringify(feedbackFormData));
 }
 
