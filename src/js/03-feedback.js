@@ -14,6 +14,7 @@ const feedbackFormData = {
 function setItem() {
   feedbackFormData['Email'] = feedbackForm.elements.email.value;
   feedbackFormData['Message'] = feedbackForm.elements.message.value;
+  console.log(feedbackFormData);
   localStorage.setItem('feedback-form-state', JSON.stringify(feedbackFormData));
 }
 
@@ -26,6 +27,8 @@ function getItem() {
     console.log(loadedData);
     feedbackForm.elements.email.value = loadedData['Email'];
     feedbackForm.elements.message.value = loadedData['Message'];
+    feedbackFormData['Email'] = feedbackForm.elements.email.value;
+    feedbackFormData['Message'] = feedbackForm.elements.message.value;
   }
 }
 
@@ -33,7 +36,7 @@ function removeItem(event) {
   event.preventDefault();
   if (
     feedbackForm.elements.email.value === '' ||
-    feedbackForm.elements.message.value === ''
+    feedbackForm.elements.message.value.trim() === ''
   ) {
     alert('Please fill in all the fields!');
   } else {
