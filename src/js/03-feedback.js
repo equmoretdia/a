@@ -23,7 +23,7 @@ function getItem() {
   savedData = localStorage.getItem('feedback-form-state');
   if (savedData) {
     const loadedData = JSON.parse(savedData);
-    // console.log(loadedData);
+    console.log(loadedData);
     feedbackForm.elements.email.value = loadedData['Email'];
     feedbackForm.elements.message.value = loadedData['Message'];
   }
