@@ -31,9 +31,16 @@ function getItem() {
 
 function removeItem(event) {
   event.preventDefault();
-  localStorage.removeItem('feedback-form-state');
-  console.log(feedbackFormData);
-  feedbackForm.reset();
+  if (
+    feedbackForm.elements.email.value === '' ||
+    feedbackForm.elements.message.value === ''
+  ) {
+    alert('Please fill in all the fields!');
+  } else {
+    localStorage.removeItem('feedback-form-state');
+    console.log(feedbackFormData);
+    feedbackForm.reset();
+  }
 }
 
 getItem();
