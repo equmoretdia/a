@@ -1,10 +1,7 @@
 var throttle = require('lodash.throttle');
 
 const feedbackForm = document.querySelector('.feedback-form');
-// const inputEmail = document.querySelector('.feedback-form input');
-// const inputMessage = document.querySelector('.feedback-form textarea');
-// const submitButton = document.querySelector('.feedback-form button');
-let savedData = null;
+const savedDataKey = 'feedback-form-state';
 
 const feedbackFormData = {
   Email: '',
@@ -12,23 +9,27 @@ const feedbackFormData = {
 };
 
 function setItem() {
-  feedbackFormData['Email'] = feedbackForm.elements.email.value;
-  feedbackFormData['Message'] = feedbackForm.elements.message.value;
+  feedbackFormData.Email = feedbackForm.elements.email.value;
+  feedbackFormData.Message = feedbackForm.elements.message.value;
   console.log(feedbackFormData);
-  localStorage.setItem('feedback-form-state', JSON.stringify(feedbackFormData));
+  localStorage.setItem(savedDataKey, JSON.stringify(feedbackFormData));
 }
 
 const throttledSetItem = throttle(setItem, 1000);
 
 function getItem() {
-  savedData = localStorage.getItem('feedback-form-state');
+  const savedData = localStorage.getItem(savedDataKey);
   if (savedData) {
-    const loadedData = JSON.parse(savedData);
-    console.log(loadedData);
-    feedbackForm.elements.email.value = loadedData['Email'];
-    feedbackForm.elements.message.value = loadedData['Message'];
-    feedbackFormData['Email'] = feedbackForm.elements.email.value;
-    feedbackFormData['Message'] = feedbackForm.elements.message.value;
+    // const loadedData = JSON.parse(savedData);
+    const { Email, Message } = JSON.parse(savedData);
+    // console.log(loadedData);
+    console.log({ Email, Message });
+    // feedbackForm.elements.email.value = loadedData['Email'];
+    // feedbackForm.elements.message.value = loadedData['Message'];
+    feedbackForm.elements.email.value = Email;
+    feedbackForm.elements.message.value = Message;
+    feedbackFormData.Email = feedbackForm.elements.email.value;
+    feedbackFormData.Message = feedbackForm.elements.message.value;
   }
 }
 
@@ -40,7 +41,7 @@ function removeItem(event) {
   ) {
     alert('Please fill in all the fields!');
   } else {
-    localStorage.removeItem('feedback-form-state');
+    localStorage.removeItem(savedDataKey);
     console.log(feedbackFormData);
     feedbackForm.reset();
   }
